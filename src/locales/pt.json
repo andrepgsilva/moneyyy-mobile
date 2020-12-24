@@ -1,0 +1,10 @@
+{
+  "login": {
+    "login": "Iniciar sessão",
+    "please_login": "Bem vindo!",
+    "email_or_username": "Email ou utilizador",
+    "password": "Palavra passe",
+    "sign_up": "Criar nova conta",
+    "forgot_password": "Esqueci a palavra passe"
+  }
+}

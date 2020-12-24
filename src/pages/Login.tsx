@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Link } from '@react-navigation/native';
+import i18n from '../i18n';
 
 export default function Login () {
   return (
@@ -25,7 +26,11 @@ export default function Login () {
       </View>
       <View style={[_styles.itemsCenter]}>
         <View style={[{ width: '85%' }, _styles['-mt-80']]}>
-          <Text style={[_styles.defaultFontStyleBold, _styles.textTwenty, _styles['text-gray-100']]}>Please Login</Text>
+          <Text
+            style={[_styles.defaultFontStyleBold, _styles.textTwenty, _styles['text-gray-100']]}
+          >
+            { i18n.t('login.please_login') }
+          </Text>
           <View>
             <Ionicons
               name="mail-outline"
@@ -35,7 +40,7 @@ export default function Login () {
             />
             <TextInput
               style={[_styles.zIndexOne, _styles['mt-25'], _styles['pl-50'], _styles['pt-16'], _styles['pb-16'], _styles['bg-white'], _styles['w-full'], _styles.brThirty, _styles.defaultFontStyleSemiBold]}
-              placeholder="Email or Username"
+              placeholder={ i18n.t('login.email_or_username') }
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
           </View>
@@ -48,7 +53,7 @@ export default function Login () {
             />
             <TextInput
               style={[_styles.zIndexOne, _styles['mt-25'], _styles['pl-50'], _styles['pt-16'], _styles['pb-16'], _styles['bg-white'], _styles['w-full'], _styles.brThirty, _styles.defaultFontStyleSemiBold]}
-              placeholder="Password"
+              placeholder={ i18n.t('login.password') }
               secureTextEntry={true}
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
@@ -57,11 +62,11 @@ export default function Login () {
             style={[_styles['mt-25'], _styles['pt-16'], _styles['pb-16'], _styles['bg-main-color'], _styles.brThirty]}
             onPress={() => alert('login')}
           >
-            <Text style={[_styles['text-white'], _styles.defaultFontStyleBold, _styles.textCenter, _styles.textFifteen]}>Login</Text>
+            <Text style={[_styles['text-white'], _styles.defaultFontStyleBold, _styles.textCenter, _styles.textFifteen]}>{ i18n.t('login.login') }</Text>
           </TouchableOpacity>
           <View style={[_styles['mt-40'], _styles.justifyBetween, _styles.flexRow]}>
-            <Link to={'#'}><Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>Sign up</Text></Link>
-            <Link to={'#'}><Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>Forgot Password?</Text></Link>
+            <Link to={'#'}><Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>{ i18n.t('login.sign_up') }</Text></Link>
+            <Link to={'#'}><Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>{ i18n.t('login.forgot_password') }</Text></Link>
           </View>
         </View>
       </View>
