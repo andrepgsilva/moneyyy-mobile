@@ -39,7 +39,17 @@ export default function Login () {
               style={[_styles.positionAbsolute, { top: 45 }, { left: 20 }, _styles.zIndexTwo]}
             />
             <TextInput
-              style={[_styles.zIndexOne, _styles['mt-25'], _styles['pl-50'], _styles['pt-16'], _styles['pb-16'], _styles['bg-white'], _styles['w-full'], _styles.brThirty, _styles.defaultFontStyleSemiBold]}
+              style={[
+                _styles.zIndexOne,
+                _styles['mt-25'],
+                _styles['pl-50'],
+                _styles['pt-16'],
+                _styles['pb-16'],
+                _styles['bg-white'],
+                _styles['w-full'],
+                _styles.brThirty,
+                _styles.defaultFontStyleSemiBold
+              ]}
               placeholder={ i18n.t('login.email_or_username') }
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
@@ -52,21 +62,52 @@ export default function Login () {
               style={[_styles.positionAbsolute, { top: 44 }, { left: 20 }, _styles.zIndexTwo]}
             />
             <TextInput
-              style={[_styles.zIndexOne, _styles['mt-25'], _styles['pl-50'], _styles['pt-16'], _styles['pb-16'], _styles['bg-white'], _styles['w-full'], _styles.brThirty, _styles.defaultFontStyleSemiBold]}
+              style={[
+                _styles.zIndexOne,
+                _styles['mt-25'],
+                _styles['pl-50'],
+                _styles['pt-16'],
+                _styles['pb-16'],
+                _styles['bg-white'],
+                _styles['w-full'],
+                _styles.brThirty,
+                _styles.defaultFontStyleSemiBold
+              ]}
               placeholder={ i18n.t('login.password') }
               secureTextEntry={true}
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
           </View>
           <TouchableOpacity
-            style={[_styles['mt-25'], _styles['pt-16'], _styles['pb-16'], _styles['bg-main-color'], _styles.brThirty]}
+            style={[
+              _styles['mt-25'],
+              _styles['pt-16'],
+              _styles['pb-16'],
+              _styles['bg-main-color'],
+              _styles.brThirty
+            ]}
             onPress={() => alert('login')}
           >
-            <Text style={[_styles['text-white'], _styles.defaultFontStyleBold, _styles.textCenter, _styles.textFifteen]}>{ i18n.t('login.login') }</Text>
+            <Text style={[
+              _styles['text-white'],
+              _styles.defaultFontStyleBold,
+              _styles.textCenter,
+              _styles.textFifteen
+            ]}>
+              { i18n.t('login.login') }
+            </Text>
           </TouchableOpacity>
           <View style={[_styles['mt-40'], _styles.justifyBetween, _styles.flexRow]}>
-            <Link to={'#'}><Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>{ i18n.t('login.sign_up') }</Text></Link>
-            <Link to={'#'}><Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>{ i18n.t('login.forgot_password') }</Text></Link>
+            <Link to={'#'}>
+              <Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>
+                { i18n.t('login.sign_up') }
+              </Text>
+            </Link>
+            <Link to={'#'}>
+              <Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>
+                { i18n.t('login.forgot_password') }
+                </Text>
+            </Link>
           </View>
         </View>
       </View>

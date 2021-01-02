@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Routes from './src/Routes';
+import { Provider } from 'react-redux';
+import store from './src/store';
 
 // eslint-disable-next-line camelcase
 import { useFonts, Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold } from '@expo-google-fonts/nunito';
@@ -18,7 +20,9 @@ export default function App () {
   }
 
   return (
-    <Routes/>
+    <Provider store={store}>
+      <Routes/>
+    </Provider>
   );
 };
 
