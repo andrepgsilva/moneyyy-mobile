@@ -5,6 +5,7 @@
     "email_or_username": "Email ou utilizador",
     "password": "Palavra passe",
     "sign_up": "Criar nova conta",
-    "forgot_password": "Esqueci a palavra passe"
+    "forgot_password": "Esqueci a palavra passe",
+    "something_went_wrong": "Desculpe, Algo deu errado. Tente novamente mais tarde." 
   }
 }

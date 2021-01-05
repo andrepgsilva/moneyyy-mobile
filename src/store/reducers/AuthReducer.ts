@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import i18n from '../../i18n';
 import axios from 'axios';
 
 interface UserCredentials {
   email: string,
   password: string
-  device?: string
+  device?: string,
+  lang?: string,
 }
 
 interface InitialState {
@@ -21,6 +23,7 @@ export const login = createAsyncThunk(
 
   async (credentials: UserCredentials, { rejectWithValue }) => {
     credentials.device = 'mobile';
+    credentials.lang = i18n.locale;
 
     try {
       return (await axios.post('/api/auth/login', credentials)).data;
@@ -54,9 +57,12 @@ const authSlice = createSlice({
       state.tokens.refreshToken = action.payload.refresh_token;
     });
     builder.addCase(login.rejected, (state, action: any) => {
-      if (action.payload !== null) {
+      if (typeof action.payload === 'object') {
         state.serverLoginErrors.push(action.payload.error);
+        return;
       }
+
+      state.serverLoginErrors.push(i18n.t('login.something_went_wrong'));
     });
   }
 });
