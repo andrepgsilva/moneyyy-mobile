@@ -18,6 +18,10 @@ const styles: stylesInterface = StyleSheet.create({
     marginTop: notchHeight
   },
 
+  textCenter: {
+    textAlign: 'center'
+  },
+
   textFifteen: {
     fontSize: 15
   },

@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import _styles from '../css/styles';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { Link } from '@react-navigation/native';
 import i18n from '../i18n';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, clearServerLoginErrors, userSelector, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
 
 export default function Login () {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const user = useSelector(userSelector);
+  const serverLoginErrors = useSelector(serverLoginErrorsSelector);
+
+  const authenticateUser = () => {
+    dispatch(clearServerLoginErrors());
+    dispatch(login({ email, password }));
+  };
+
   return (
     <View
       style={[_styles.flexOne, _styles['bg-honeydew'], _styles.justifyAround]}
@@ -39,6 +53,8 @@ export default function Login () {
               style={[_styles.positionAbsolute, { top: 45 }, { left: 20 }, _styles.zIndexTwo]}
             />
             <TextInput
+              value={email}
+              onChangeText={text => setEmail(text)}
               style={[
                 _styles.zIndexOne,
                 _styles['mt-25'],
@@ -46,6 +62,7 @@ export default function Login () {
                 _styles['pt-16'],
                 _styles['pb-16'],
                 _styles['bg-white'],
+                _styles['text-cool-gray-800'],
                 _styles['w-full'],
                 _styles.brThirty,
                 _styles.defaultFontStyleSemiBold
@@ -62,6 +79,8 @@ export default function Login () {
               style={[_styles.positionAbsolute, { top: 44 }, { left: 20 }, _styles.zIndexTwo]}
             />
             <TextInput
+              value={password}
+              onChangeText={text => setPassword(text)}
               style={[
                 _styles.zIndexOne,
                 _styles['mt-25'],
@@ -69,6 +88,7 @@ export default function Login () {
                 _styles['pt-16'],
                 _styles['pb-16'],
                 _styles['bg-white'],
+                _styles['text-cool-gray-800'],
                 _styles['w-full'],
                 _styles.brThirty,
                 _styles.defaultFontStyleSemiBold
@@ -79,6 +99,7 @@ export default function Login () {
             ></TextInput>
           </View>
           <TouchableOpacity
+            onPress={authenticateUser}
             style={[
               _styles['mt-25'],
               _styles['pt-16'],
@@ -86,7 +107,6 @@ export default function Login () {
               _styles['bg-main-color'],
               _styles.brThirty
             ]}
-            onPress={() => alert('login')}
           >
             <Text style={[
               _styles['text-white'],
@@ -97,14 +117,25 @@ export default function Login () {
               { i18n.t('login.login') }
             </Text>
           </TouchableOpacity>
-          <View style={[_styles['mt-40'], _styles.justifyBetween, _styles.flexRow]}>
+          <View>
+            <Text
+              style={[_styles['text-red-500'], _styles.textCenter, _styles['mt-20'], _styles.defaultFontStyleSemiBold]}
+            >
+              {
+                serverLoginErrors
+                  ? serverLoginErrors.join('')
+                  : ''
+              }
+            </Text>
+          </View>
+          <View style={[_styles['mt-20'], _styles.justifyBetween, _styles.flexRow]}>
             <Link to={'#'}>
-              <Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>
+              <Text style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}>
                 { i18n.t('login.sign_up') }
               </Text>
             </Link>
             <Link to={'#'}>
-              <Text style={[_styles['text-cool-gray-400'], _styles.defaultFontStyleSemiBold]}>
+              <Text style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}>
                 { i18n.t('login.forgot_password') }
                 </Text>
             </Link>
