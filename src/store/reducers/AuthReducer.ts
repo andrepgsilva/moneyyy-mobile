@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import i18n from '../../i18n';
+import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import i18n from '../../i18n';
 
 interface UserCredentials {
   email: string,
@@ -53,8 +54,9 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.email;
-      state.tokens.accessToken = action.payload.access_token;
-      state.tokens.refreshToken = action.payload.refresh_token;
+
+      SecureStore.setItemAsync('access_token', action.payload.access_token);
+      SecureStore.setItemAsync('refresh_token', action.payload.refresh_token);
     });
     builder.addCase(login.rejected, (state, action: any) => {
       if (typeof action.payload === 'object') {

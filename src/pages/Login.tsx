@@ -7,6 +7,7 @@ import { Link } from '@react-navigation/native';
 import i18n from '../i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, clearServerLoginErrors, userSelector, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
+import * as SecureStore from 'expo-secure-store';
 
 export default function Login () {
   const dispatch = useDispatch();
