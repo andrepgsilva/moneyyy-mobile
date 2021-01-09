@@ -3,23 +3,28 @@ import _styles from '../css/styles';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View, Image, Text } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { Link } from '@react-navigation/native';
+import { Link, useNavigation } from '@react-navigation/native';
 import i18n from '../i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, clearServerLoginErrors, userSelector, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
-import * as SecureStore from 'expo-secure-store';
+import { AppDispatch } from '../store';
+import { login, clearServerLoginErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
 
 export default function Login () {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const user = useSelector(userSelector);
   const serverLoginErrors = useSelector(serverLoginErrorsSelector);
 
   const authenticateUser = () => {
     dispatch(clearServerLoginErrors());
-    dispatch(login({ email, password }));
+    dispatch(login({ email, password }))
+      .then((asyncThunkResponse: object) => {
+        if (!Object.prototype.hasOwnProperty.call(asyncThunkResponse, 'error')) {
+          navigation.navigate('Content');
+        }
+      });
   };
 
   return (
