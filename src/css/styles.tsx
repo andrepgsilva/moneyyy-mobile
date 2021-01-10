@@ -22,6 +22,10 @@ const styles: stylesInterface = StyleSheet.create({
     textAlign: 'center'
   },
 
+  textLeft: {
+    textAlign: 'left'
+  },
+
   textFifteen: {
     fontSize: 15
   },

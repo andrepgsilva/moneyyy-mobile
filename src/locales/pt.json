@@ -1,11 +1,13 @@
 {
-  "login": {
+  "auth": {
     "login": "Iniciar sessão",
     "please_login": "Bem vindo!",
     "email_or_username": "Email ou utilizador",
     "password": "Palavra passe",
     "sign_up": "Criar nova conta",
     "forgot_password": "Esqueci a palavra passe",
-    "something_went_wrong": "Desculpe, Algo deu errado. Tente novamente mais tarde." 
+    "something_went_wrong": "Desculpe, Algo deu errado. Tente novamente mais tarde.",
+    "password_confirmation": "Confirmar palavra passe",
+    "have_an_account": "Já tem uma conta?"
   }
 }

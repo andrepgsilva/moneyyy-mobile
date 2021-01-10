@@ -15,6 +15,10 @@ export default {
     backgroundColor: '#2ac17c'
   },
 
+  'bg-main-color-light': {
+    backgroundColor: '#8ee6b6'
+  },
+
   'text-main-color': {
     color: '#2ac17c'
   },

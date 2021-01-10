@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import i18n from '../../i18n';
+import { hasOwnProperty } from '../../utils';
 
 interface UserCredentials {
   email: string,
@@ -60,11 +61,26 @@ const authSlice = createSlice({
     });
     builder.addCase(login.rejected, (state, action: any) => {
       if (typeof action.payload === 'object') {
-        state.serverLoginErrors.push(action.payload.error);
+        let errors: Array<string> = [action.payload.error];
+
+        if (hasOwnProperty(action.payload, 'errors')) {
+          errors = [];
+
+          let fieldErrorPropertyName: string = '';
+
+          for (fieldErrorPropertyName in action.payload.errors) {
+            const fieldErrorPropertyValue = action.payload.errors[fieldErrorPropertyName];
+            // errors.push('\n');
+            errors.push(fieldErrorPropertyValue[0]);
+          }
+        }
+
+        state.serverLoginErrors = errors;
+
         return;
       }
 
-      state.serverLoginErrors.push(i18n.t('login.something_went_wrong'));
+      state.serverLoginErrors.push(i18n.t('auth.something_went_wrong'));
     });
   }
 });
