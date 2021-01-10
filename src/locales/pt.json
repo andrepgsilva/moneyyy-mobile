@@ -1,8 +1,10 @@
 {
   "auth": {
+    "your_name": "Seu nome",
+    "name": "Nome",
     "login": "Iniciar sessão",
     "please_login": "Bem vindo!",
-    "email_or_username": "Email ou utilizador",
+    "email_address": "Endereço de email",
     "password": "Palavra passe",
     "sign_up": "Criar nova conta",
     "forgot_password": "Esqueci a palavra passe",

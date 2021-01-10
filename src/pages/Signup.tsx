@@ -7,25 +7,39 @@ import { Link, useNavigation } from '@react-navigation/native';
 import i18n from '../i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
-import { login, clearServerLoginErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
+import { signup, clearServerAuthErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
+import { hasOwnProperty } from '../utils';
 
 export default function Signup () {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const serverLoginErrors = useSelector(serverLoginErrorsSelector);
 
+  const goToLogin = () => {
+    dispatch(clearServerAuthErrors());
+    navigation.navigate('Login');
+  };
+
   const authenticateUser = () => {
-    dispatch(clearServerLoginErrors());
-    dispatch(login({ email, password }))
+    dispatch(clearServerAuthErrors());
+
+    dispatch(signup({ name, email, password }))
       .then((asyncThunkResponse: object) => {
-        if (!Object.prototype.hasOwnProperty.call(asyncThunkResponse, 'error')) {
-          navigation.navigate('Content');
+        const hasNotAserverError = !hasOwnProperty(asyncThunkResponse, 'error');
+        const hasFormFieldsErrors = !hasOwnProperty(asyncThunkResponse, 'errors');
+
+        if (hasNotAserverError && hasFormFieldsErrors) {
+          navigation.navigate('Login');
         }
       });
   };
+
+  const isButtonDisabled = email === '' || password === '' || name === '';
+  const disabledClass = isButtonDisabled ? _styles['bg-main-color-light'] : _styles['bg-main-color'];
 
   return (
     <View
@@ -46,11 +60,32 @@ export default function Signup () {
       </View>
       <View style={[_styles.itemsCenter]}>
         <View style={[{ width: '85%' }, _styles['-mt-80']]}>
-          {/* <Text
-            style={[_styles.defaultFontStyleBold, _styles.textTwenty, _styles['text-gray-100']]}
-          >
-            { i18n.t('auth.please_login') }
-          </Text> */}
+          <View>
+            <Ionicons
+              name="happy-outline"
+              color={_styles['text-cool-gray-400'].color}
+              size={20}
+              style={[_styles.positionAbsolute, { top: 44 }, { left: 20 }, _styles.zIndexTwo]}
+            />
+            <TextInput
+              value={name}
+              onChangeText={text => setName(text)}
+              style={[
+                _styles.zIndexOne,
+                _styles['mt-25'],
+                _styles['pl-50'],
+                _styles['pt-16'],
+                _styles['pb-16'],
+                _styles['bg-white'],
+                _styles['text-cool-gray-800'],
+                _styles['w-full'],
+                _styles.brThirty,
+                _styles.defaultFontStyleSemiBold
+              ]}
+              placeholder={ i18n.t('auth.your_name') }
+              placeholderTextColor={_styles['text-cool-gray-100'].color}
+            ></TextInput>
+          </View>
           <View>
             <Ionicons
               name="mail-outline"
@@ -73,7 +108,7 @@ export default function Signup () {
                 _styles.brThirty,
                 _styles.defaultFontStyleSemiBold
               ]}
-              placeholder={ i18n.t('auth.email_or_username') }
+              placeholder={ i18n.t('auth.email_address') }
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
           </View>
@@ -104,33 +139,7 @@ export default function Signup () {
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
           </View>
-          <View>
-            <Ionicons
-              name="md-lock-open-outline"
-              color={_styles['text-cool-gray-400'].color}
-              size={20}
-              style={[_styles.positionAbsolute, { top: 44 }, { left: 20 }, _styles.zIndexTwo]}
-            />
-            <TextInput
-              value={password}
-              onChangeText={text => setPassword(text)}
-              style={[
-                _styles.zIndexOne,
-                _styles['mt-25'],
-                _styles['pl-50'],
-                _styles['pt-16'],
-                _styles['pb-16'],
-                _styles['bg-white'],
-                _styles['text-cool-gray-800'],
-                _styles['w-full'],
-                _styles.brThirty,
-                _styles.defaultFontStyleSemiBold
-              ]}
-              placeholder={ i18n.t('auth.password_confirmation') }
-              secureTextEntry={true}
-              placeholderTextColor={_styles['text-cool-gray-100'].color}
-            ></TextInput>
-          </View>
+
           <TouchableOpacity
             onPress={authenticateUser}
             style={[
@@ -138,8 +147,10 @@ export default function Signup () {
               _styles['pt-16'],
               _styles['pb-16'],
               _styles['bg-main-color'],
-              _styles.brThirty
+              _styles.brThirty,
+              disabledClass
             ]}
+            disabled={isButtonDisabled}
           >
             <Text style={[
               _styles['text-white'],
@@ -151,18 +162,29 @@ export default function Signup () {
             </Text>
           </TouchableOpacity>
           <View>
-            <Text
-              style={[_styles['text-red-500'], _styles.textCenter, _styles['mt-20'], _styles.defaultFontStyleSemiBold]}
-            >
-              {
-                serverLoginErrors
-                  ? serverLoginErrors.join('')
-                  : ''
+          <View style={[_styles['mt-20']]}>
+            {
+              !serverLoginErrors
+                ? <Text></Text>
+                : serverLoginErrors.map((fieldError: string, index: number) => {
+                  return (
+                    <Text
+                      key={index}
+                      style={[
+                        _styles['text-red-500'],
+                        _styles['mt-1'],
+                        _styles.defaultFontStyleSemiBold
+                      ]}
+                    >
+                      {fieldError}
+                    </Text>
+                  );
+                })
               }
-            </Text>
+          </View>
           </View>
           <View style={[_styles['mt-20'], _styles.justifyBetween, _styles.flexRow]}>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity onPress={() => goToLogin()}>
               <Text
                 style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}
               >

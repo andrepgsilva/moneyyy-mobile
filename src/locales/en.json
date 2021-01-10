@@ -1,8 +1,10 @@
 {
   "auth": {
+    "name": "Name",
+    "your_name": "Your Name",
     "login": "Login",
     "please_login": "Please Login",
-    "email_or_username": "Email or Username",
+    "email_address": "Email Address",
     "password": "Password",
     "sign_up": "Sign Up",
     "forgot_password": "Forgot Password?",

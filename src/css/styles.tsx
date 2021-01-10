@@ -26,6 +26,14 @@ const styles: stylesInterface = StyleSheet.create({
     textAlign: 'left'
   },
 
+  textRight: {
+    textAlign: 'right'
+  },
+
+  textJustify: {
+    textAlign: 'justify'
+  },
+
   textFifteen: {
     fontSize: 15
   },

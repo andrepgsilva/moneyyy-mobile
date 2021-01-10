@@ -8,7 +8,7 @@ import { hasOwnProperty } from '../utils';
 import i18n from '../i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
-import { login, clearServerLoginErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
+import { login, clearServerAuthErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
 
 export default function Login () {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,8 +18,13 @@ export default function Login () {
   const [password, setPassword] = useState('');
   const serverLoginErrors = useSelector(serverLoginErrorsSelector);
 
+  const goToSignUp = () => {
+    dispatch(clearServerAuthErrors());
+    navigation.navigate('Signup');
+  };
+
   const authenticateUser = () => {
-    dispatch(clearServerLoginErrors());
+    dispatch(clearServerAuthErrors());
     dispatch(login({ email, password }))
       .then((asyncThunkResponse: object) => {
         const hasNotAserverError = !hasOwnProperty(asyncThunkResponse, 'error');
@@ -80,7 +85,7 @@ export default function Login () {
                 _styles.brThirty,
                 _styles.defaultFontStyleSemiBold
               ]}
-              placeholder={ i18n.t('auth.email_or_username') }
+              placeholder={ i18n.t('auth.email_address') }
               placeholderTextColor={_styles['text-cool-gray-100'].color}
             ></TextInput>
           </View>
@@ -131,7 +136,7 @@ export default function Login () {
               { i18n.t('auth.login') }
             </Text>
           </TouchableOpacity>
-          <View style={[_styles['mt-20'], _styles.itemsCenter]}>
+          <View style={[_styles['mt-20']]}>
             {
               !serverLoginErrors
                 ? <Text></Text>
@@ -141,7 +146,6 @@ export default function Login () {
                       key={index}
                       style={[
                         _styles['text-red-500'],
-                        _styles.textLeft,
                         _styles['mt-1'],
                         _styles.defaultFontStyleSemiBold
                       ]}
@@ -153,7 +157,7 @@ export default function Login () {
               }
           </View>
           <View style={[_styles['mt-20'], _styles.justifyBetween, _styles.flexRow]}>
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <TouchableOpacity onPress={() => goToSignUp()}>
               <Text
                 style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}
               >
