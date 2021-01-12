@@ -173,7 +173,7 @@ export default function Login () {
               <Text
                 style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}
               >
-                { i18n.t('auth.forgot_password') }
+                { i18n.t('auth.forgot_password_question') }
               </Text>
             </TouchableOpacity>
           </View>

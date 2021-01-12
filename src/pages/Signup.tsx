@@ -193,7 +193,7 @@ export default function Signup () {
             </TouchableOpacity>
             <Link to={'#'}>
               <Text style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}>
-                { i18n.t('auth.forgot_password') }
+                { i18n.t('auth.forgot_password_question') }
                 </Text>
             </Link>
           </View>

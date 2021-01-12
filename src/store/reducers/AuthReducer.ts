@@ -2,14 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import i18n from '../../i18n';
-import { AuthErrorsHandler, formatAuthErrors, hasOwnProperty } from '../../utils';
+import { ErrorsFromServerHandler } from '../../utils';
 
 interface UserCredentials {
   name?: string,
   email: string,
-  password: string,
+  password?: string,
   // eslint-disable-next-line camelcase
   password_confirmation?: string,
+  // eslint-disable-next-line camelcase
+  password_confirmation_token?: string,
   device?: string,
   lang?: string,
 }
@@ -54,6 +56,49 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const getCodeToRecoverPassword = createAsyncThunk(
+  'users/getCodeToRecoverPassword',
+
+  async (credentials: UserCredentials, { rejectWithValue }) => {
+    credentials.lang = i18n.locale;
+
+    try {
+      return (await axios.post('/api/forgot-password', credentials)).data;
+    } catch (err) {
+      return rejectWithValue(err.response.data as Error);
+    }
+  }
+);
+
+export const confirmCodeToRecoverPassword = createAsyncThunk(
+  'users/confirmCodeToRecoverPassword',
+
+  async (credentials: UserCredentials, { rejectWithValue }) => {
+    credentials.lang = i18n.locale;
+
+    try {
+      return (await axios.post('/api/token-match', credentials)).data;
+    } catch (err) {
+      return rejectWithValue(err.response.data as Error);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'users/resetPassword',
+
+  async (credentials: UserCredentials, { rejectWithValue }) => {
+    credentials.password_confirmation = credentials.password;
+    credentials.lang = i18n.locale;
+
+    try {
+      return (await axios.put('/api/reset-password', credentials)).data;
+    } catch (err) {
+      return rejectWithValue(err.response.data as Error);
+    }
+  }
+);
+
 const initialState: InitialState = {
   user: null,
   tokens: {
@@ -69,6 +114,9 @@ const authSlice = createSlice({
   reducers: {
     clearServerAuthErrors: (state) => {
       state.serverAuthErrors = [];
+    },
+    setUserEmail: (state, action: any) => {
+      state.user = action.payload.email;
     }
   },
   extraReducers: builder => {
@@ -80,16 +128,28 @@ const authSlice = createSlice({
     });
 
     builder.addCase(login.rejected, (state, action: any) => {
-      AuthErrorsHandler(state, action);
+      ErrorsFromServerHandler(state, action);
     });
 
     builder.addCase(signup.rejected, (state, action: any) => {
-      AuthErrorsHandler(state, action);
+      ErrorsFromServerHandler(state, action);
+    });
+
+    builder.addCase(getCodeToRecoverPassword.rejected, (state, action: any) => {
+      ErrorsFromServerHandler(state, action);
+    });
+
+    builder.addCase(confirmCodeToRecoverPassword.rejected, (state, action: any) => {
+      ErrorsFromServerHandler(state, action);
+    });
+
+    builder.addCase(resetPassword.rejected, (state, action: any) => {
+      ErrorsFromServerHandler(state, action);
     });
   }
 });
 
-export const { clearServerAuthErrors } = authSlice.actions;
+export const { clearServerAuthErrors, setUserEmail } = authSlice.actions;
 
 export const userSelector = (state: any) => {
   return state.auth.user;
@@ -97,6 +157,10 @@ export const userSelector = (state: any) => {
 
 export const serverLoginErrorsSelector = (state: any) => {
   return state.auth.serverAuthErrors;
+};
+
+export const userEmailSelector = (state: any) => {
+  return state.auth.user;
 };
 
 export default authSlice.reducer;

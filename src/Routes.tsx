@@ -6,6 +6,8 @@ import Content from './pages/Content';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import MatchPasswordToken from './pages/MatchPasswordToken';
+import i18n from './i18n';
+import ResetPassword from './pages/ResetPassword';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -31,12 +33,17 @@ export default function Routes () {
         <Screen
           name="ForgotPassword"
           component={ForgotPassword}
-          options={{ headerShown: true, title: 'Forgot Password', headerTintColor: '#4d5349' }}
+          options={{ headerShown: true, title: i18n.t('auth.forgot_password'), headerTintColor: '#4d5349' }}
         />
         <Screen
           name="MatchPasswordToken"
           component={MatchPasswordToken}
-          // options={{ headerShown: false }}
+          options={{ headerShown: true, title: i18n.t('auth.code_confirmation'), headerTintColor: '#4d5349' }}
+        />
+        <Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{ headerShown: true, title: i18n.t('auth.reset_password'), headerTintColor: '#4d5349' }}
         />
       </Navigator>
     </NavigationContainer>

@@ -4,7 +4,7 @@ export const hasOwnProperty = (object: object, propertyName: string) => {
   return Object.prototype.hasOwnProperty.call(object, propertyName);
 };
 
-export const formatAuthErrors = (action: any) => {
+export const formatErrorsFromServer = (action: any) => {
   let errors: Array<string> = [action.payload.error];
 
   if (hasOwnProperty(action.payload, 'errors')) {
@@ -21,9 +21,9 @@ export const formatAuthErrors = (action: any) => {
   return errors;
 };
 
-export const AuthErrorsHandler = (state: any, action: any) => {
+export const ErrorsFromServerHandler = (state: any, action: any) => {
   if (typeof action.payload === 'object') {
-    state.serverAuthErrors = formatAuthErrors(action);
+    state.serverAuthErrors = formatErrorsFromServer(action);
 
     return;
   }
