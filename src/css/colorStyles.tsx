@@ -161,5 +161,9 @@ export default {
 
   'text-red-900': {
     color: '#7f1d1d'
+  },
+
+  'bg-red-900': {
+    backgroundColor: '#7f1d1d'
   }
 };

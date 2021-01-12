@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
 import { login, clearServerAuthErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
 
-export default function Login () {
+export default function MatchPasswordToken () {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
 
@@ -21,11 +21,6 @@ export default function Login () {
   const goToSignUp = () => {
     dispatch(clearServerAuthErrors());
     navigation.navigate('Signup');
-  };
-
-  const goToForgotPassword = () => {
-    dispatch(clearServerAuthErrors());
-    navigation.navigate('ForgotPassword');
   };
 
   const authenticateUser = () => {
@@ -48,7 +43,8 @@ export default function Login () {
     <View
       style={[_styles.flexOne, _styles['bg-honeydew'], _styles.justifyAround]}
     >
-      <View style={[_styles.notchIgnore]}>
+      <Text>Here is the match password token page</Text>
+      {/* <View style={[_styles.notchIgnore]}>
         <View style={[_styles.itemsCenter]}>
           <Image
             style={styles.logo}
@@ -169,17 +165,15 @@ export default function Login () {
                 {i18n.t('auth.sign_up')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => goToForgotPassword()}>
-              <Text
-                style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}
-              >
+            <Link to={'#'}>
+              <Text style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}>
                 { i18n.t('auth.forgot_password') }
-              </Text>
-            </TouchableOpacity>
+                </Text>
+            </Link>
           </View>
         </View>
       </View>
-      <View></View>
+      <View></View> */}
     </View>
   );
 };

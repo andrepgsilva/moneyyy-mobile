@@ -10,6 +10,8 @@
     "forgot_password": "Esqueci a palavra passe",
     "something_went_wrong": "Desculpe, Algo deu errado. Tente novamente mais tarde.",
     "password_confirmation": "Confirmar palavra passe",
-    "have_an_account": "Já tem uma conta?"
+    "have_an_account": "Já tem uma conta?",
+    "enter_email_recover_account": "Insira o seu email e nós enviaremos um código para recuperar sua conta.",
+    "send_the_code": "Enviar o código"
   }
 }

@@ -18,6 +18,10 @@ const styles: stylesInterface = StyleSheet.create({
     marginTop: notchHeight
   },
 
+  subtractNotchMargin: {
+    marginTop: notchHeight * -1
+  },
+
   textCenter: {
     textAlign: 'center'
   },

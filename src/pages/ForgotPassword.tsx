@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
 import { login, clearServerAuthErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
 
-export default function Login () {
+export default function ForgotPassword () {
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
   const serverLoginErrors = useSelector(serverLoginErrorsSelector);
 
   const goToSignUp = () => {
@@ -23,32 +23,100 @@ export default function Login () {
     navigation.navigate('Signup');
   };
 
-  const goToForgotPassword = () => {
-    dispatch(clearServerAuthErrors());
-    navigation.navigate('ForgotPassword');
-  };
+  // const authenticateUser = () => {
+  //   dispatch(clearServerAuthErrors());
+  //   dispatch(login({ email, password }))
+  //     .then((asyncThunkResponse: object) => {
+  //       const hasNotAserverError = !hasOwnProperty(asyncThunkResponse, 'error');
+  //       const hasFormFieldsErrors = !hasOwnProperty(asyncThunkResponse, 'errors');
 
-  const authenticateUser = () => {
-    dispatch(clearServerAuthErrors());
-    dispatch(login({ email, password }))
-      .then((asyncThunkResponse: object) => {
-        const hasNotAserverError = !hasOwnProperty(asyncThunkResponse, 'error');
-        const hasFormFieldsErrors = !hasOwnProperty(asyncThunkResponse, 'errors');
+  //       if (hasNotAserverError && hasFormFieldsErrors) {
+  //         navigation.navigate('Content');
+  //       }
+  //     });
+  // };
 
-        if (hasNotAserverError && hasFormFieldsErrors) {
-          navigation.navigate('Content');
-        }
-      });
-  };
-
-  const isButtonDisabled = email === '' || password === '';
+  const isButtonDisabled = email === '';
   const disabledClass = isButtonDisabled ? _styles['bg-main-color-light'] : _styles['bg-main-color'];
 
   return (
     <View
-      style={[_styles.flexOne, _styles['bg-honeydew'], _styles.justifyAround]}
+      style={[_styles.flexOne]}
     >
-      <View style={[_styles.notchIgnore]}>
+      <View style={[_styles.itemsCenter, _styles['mt-100']]}>
+        <View
+          style={[
+            { width: '85%' },
+            _styles['mt-10']
+          ]}
+        >
+          <View style={[_styles.itemsCenter]}>
+            <Ionicons
+              name="key-outline"
+              color={_styles['text-main-color'].color}
+              size={140}
+              // style={[{ width: 20 }]}
+            />
+          </View>
+
+          <View style={[_styles['mt-20']]}>
+            <Text
+              style={[_styles.defaultFontStyleBold, _styles['text-cool-gray-700']]}
+            >
+              { i18n.t('auth.enter_email_recover_account') }
+            </Text>
+          </View>
+
+          <View>
+            <Ionicons
+              name="mail-outline"
+              color={_styles['text-cool-gray-400'].color}
+              size={20}
+              style={[_styles.positionAbsolute, { top: 45 }, { left: 20 }, _styles.zIndexTwo]}
+            />
+            <TextInput
+              value={email}
+              onChangeText={text => setEmail(text)}
+              style={[
+                _styles.zIndexOne,
+                _styles['mt-25'],
+                _styles['pl-50'],
+                _styles['pt-16'],
+                _styles['pb-16'],
+                _styles['bg-white'],
+                _styles['text-cool-gray-800'],
+                _styles['w-full'],
+                _styles.brThirty,
+                _styles.defaultFontStyleSemiBold
+              ]}
+              placeholder={ i18n.t('auth.email_address') }
+              placeholderTextColor={_styles['text-cool-gray-100'].color}
+            ></TextInput>
+          </View>
+
+          <TouchableOpacity
+            onPress={() => alert('We can get back your account!')}
+            style={[
+              _styles['mt-25'],
+              _styles['pt-16'],
+              _styles['pb-16'],
+              disabledClass,
+              _styles.brThirty
+            ]}
+            disabled={isButtonDisabled}
+          >
+            <Text style={[
+              _styles['text-white'],
+              _styles.defaultFontStyleBold,
+              _styles.textCenter,
+              _styles.textFifteen
+            ]}>
+              { i18n.t('auth.send_the_code') }
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* <View style={[_styles.notchIgnore]}>
         <View style={[_styles.itemsCenter]}>
           <Image
             style={styles.logo}
@@ -169,17 +237,15 @@ export default function Login () {
                 {i18n.t('auth.sign_up')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => goToForgotPassword()}>
-              <Text
-                style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}
-              >
+            <Link to={'#'}>
+              <Text style={[_styles['text-cool-gray-600'], _styles.defaultFontStyleSemiBold]}>
                 { i18n.t('auth.forgot_password') }
-              </Text>
-            </TouchableOpacity>
+                </Text>
+            </Link>
           </View>
         </View>
       </View>
-      <View></View>
+      <View></View> */}
     </View>
   );
 };

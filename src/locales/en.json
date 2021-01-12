@@ -10,6 +10,8 @@
     "forgot_password": "Forgot Password?",
     "something_went_wrong": "Sorry, something went wrong. Try again later.",
     "password_confirmation": "Password Confirmation",
-    "have_an_account": "Have an account?"
+    "have_an_account": "Have an account?",
+    "enter_email_recover_account": "Enter your email and we'll send you a code to recover your account.",
+    "send_the_code": "Send the code"
   } 
 }
