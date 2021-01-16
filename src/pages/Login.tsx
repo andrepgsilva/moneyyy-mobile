@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import _styles from '../css/styles';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, View, Image, Text, Button } from 'react-native';
+import { StyleSheet, View, Image, Text } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { Link, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { hasOwnProperty } from '../utils';
 import i18n from '../i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../store';
+import store, { AppDispatch } from '../store';
 import { login, clearServerAuthErrors, serverLoginErrorsSelector } from '../store/reducers/AuthReducer';
+import ActionQueue from '../utils/ActionQueue';
 
 export default function Login () {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,6 +31,7 @@ export default function Login () {
 
   const authenticateUser = () => {
     dispatch(clearServerAuthErrors());
+
     dispatch(login({ email, password }))
       .then((asyncThunkResponse: object) => {
         const hasNotAserverError = !hasOwnProperty(asyncThunkResponse, 'error');

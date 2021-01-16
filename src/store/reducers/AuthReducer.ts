@@ -22,11 +22,12 @@ interface InitialState {
     accessToken: string|null,
     refreshToken: string|null,
   },
+  refreshTokenLoading: boolean,
   serverAuthErrors: Array<string>
 }
 
 export const login = createAsyncThunk(
-  'users/login',
+  'auth/login',
 
   async (credentials: UserCredentials, { rejectWithValue }) => {
     credentials.device = 'mobile';
@@ -40,8 +41,20 @@ export const login = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk(
+  'auth/logout',
+
+  async (arg, { dispatch }) => {
+    dispatch(setUserEmail(null));
+
+    SecureStore.setItemAsync('user', '');
+    SecureStore.setItemAsync('access_token', '');
+    SecureStore.setItemAsync('refresh_token', '');
+  }
+);
+
 export const signup = createAsyncThunk(
-  'users/signup',
+  'auth/signup',
 
   async (credentials: UserCredentials, { rejectWithValue }) => {
     credentials.device = 'mobile';
@@ -57,7 +70,7 @@ export const signup = createAsyncThunk(
 );
 
 export const getCodeToRecoverPassword = createAsyncThunk(
-  'users/getCodeToRecoverPassword',
+  'auth/getCodeToRecoverPassword',
 
   async (credentials: UserCredentials, { rejectWithValue }) => {
     credentials.lang = i18n.locale;
@@ -71,7 +84,7 @@ export const getCodeToRecoverPassword = createAsyncThunk(
 );
 
 export const confirmCodeToRecoverPassword = createAsyncThunk(
-  'users/confirmCodeToRecoverPassword',
+  'auth/confirmCodeToRecoverPassword',
 
   async (credentials: UserCredentials, { rejectWithValue }) => {
     credentials.lang = i18n.locale;
@@ -85,7 +98,7 @@ export const confirmCodeToRecoverPassword = createAsyncThunk(
 );
 
 export const resetPassword = createAsyncThunk(
-  'users/resetPassword',
+  'auth/resetPassword',
 
   async (credentials: UserCredentials, { rejectWithValue }) => {
     credentials.password_confirmation = credentials.password;
@@ -105,6 +118,7 @@ const initialState: InitialState = {
     accessToken: null,
     refreshToken: null
   },
+  refreshTokenLoading: false,
   serverAuthErrors: []
 };
 
@@ -117,14 +131,21 @@ const authSlice = createSlice({
     },
     setUserEmail: (state, action: any) => {
       state.user = action.payload.email;
+    },
+    toggleRefreshTokenLoading: (state) => {
+      state.refreshTokenLoading = !state.refreshTokenLoading;
     }
   },
   extraReducers: builder => {
     builder.addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.email;
+      SecureStore.setItemAsync('user', action.payload.email);
 
       SecureStore.setItemAsync('access_token', action.payload.access_token);
+      console.log(action.payload.access_token);
+
       SecureStore.setItemAsync('refresh_token', action.payload.refresh_token);
+      console.log(action.payload.refresh_token);
     });
 
     builder.addCase(login.rejected, (state, action: any) => {
@@ -149,7 +170,7 @@ const authSlice = createSlice({
   }
 });
 
-export const { clearServerAuthErrors, setUserEmail } = authSlice.actions;
+export const { clearServerAuthErrors, setUserEmail, toggleRefreshTokenLoading } = authSlice.actions;
 
 export const userSelector = (state: any) => {
   return state.auth.user;
