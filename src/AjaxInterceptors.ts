@@ -25,17 +25,13 @@ const interceptorsError = (error: any) => {
   if (isUnauthorizedError && isNotRetryingTheRefreshTokenRequest && isUserLoggedIn) {
     store.dispatch(toggleRefreshTokenLoading());
 
-    console.log('show!');
-
     SecureStore.getItemAsync('refresh_token')
       .then((refreshToken: any) => {
         axios.post('/api/auth/refresh-token', { refresh_token: refreshToken, device: 'mobile', email: authenticatedUser })
           .then((response) => {
-            console.log('Refresh token!');
-            console.log(response.data);
-            console.log('--------');
-
             store.dispatch(toggleRefreshTokenLoading());
+
+            console.log('eu aqui tentando refresh');
 
             Promise.all([
               SecureStore.setItemAsync('access_token', response.data.access_token),
@@ -53,13 +49,11 @@ const interceptorsError = (error: any) => {
 
                   store.dispatch(actionToCall());
                   ActionQueue.deleteLastAction();
-                  console.log('Tudo certo, nada errado!');
                 }
               });
           })
           .catch(() => {
-            console.log('Deu ruim');
-
+            console.log('Deu ruim aqui');
             store.dispatch(toggleRefreshTokenLoading());
             ActionQueue.clearQueue();
             SecureStore.setItemAsync('user', '');

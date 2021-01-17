@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './pages/Login';
-import Content from './pages/Content';
+import Bills from './pages/Bills';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import MatchPasswordToken from './pages/MatchPasswordToken';
@@ -21,8 +21,8 @@ export default function Routes () {
           options={{ headerShown: false }}
         />
         <Screen
-          name="Content"
-          component={Content}
+          name="Bills"
+          component={Bills}
           // options={{ headerShown: false }}
         />
         <Screen

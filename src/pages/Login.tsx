@@ -38,7 +38,7 @@ export default function Login () {
         const hasFormFieldsErrors = !hasOwnProperty(asyncThunkResponse, 'errors');
 
         if (hasNotAserverError && hasFormFieldsErrors) {
-          navigation.navigate('Content');
+          navigation.navigate('Bills');
         }
       });
   };

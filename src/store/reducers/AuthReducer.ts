@@ -142,10 +142,8 @@ const authSlice = createSlice({
       SecureStore.setItemAsync('user', action.payload.email);
 
       SecureStore.setItemAsync('access_token', action.payload.access_token);
-      console.log(action.payload.access_token);
 
       SecureStore.setItemAsync('refresh_token', action.payload.refresh_token);
-      console.log(action.payload.refresh_token);
     });
 
     builder.addCase(login.rejected, (state, action: any) => {
