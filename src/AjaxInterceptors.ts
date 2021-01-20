@@ -31,8 +31,6 @@ const interceptorsError = (error: any) => {
           .then((response) => {
             store.dispatch(toggleRefreshTokenLoading());
 
-            console.log('eu aqui tentando refresh');
-
             Promise.all([
               SecureStore.setItemAsync('access_token', response.data.access_token),
               SecureStore.setItemAsync('refresh_token', response.data.refresh_token)
@@ -53,7 +51,6 @@ const interceptorsError = (error: any) => {
               });
           })
           .catch(() => {
-            console.log('Deu ruim aqui');
             store.dispatch(toggleRefreshTokenLoading());
             ActionQueue.clearQueue();
             SecureStore.setItemAsync('user', '');

@@ -7,7 +7,7 @@ import ActionQueue from '../utils/ActionQueue';
 
 import _styles from '../css/styles';
 
-export default function Content () {
+export default function Bills () {
   const dispatch = useDispatch<AppDispatch>();
   const [bills, setBills] = useState<Array<Object>>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
