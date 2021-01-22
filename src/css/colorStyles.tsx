@@ -3,6 +3,10 @@ export default {
     color: '#000000'
   },
 
+  'text-black-alpha-80': {
+    color: 'rgba(0, 0, 0, 0.8)'
+  },
+
   'text-white': {
     color: '#ffffff'
   },
