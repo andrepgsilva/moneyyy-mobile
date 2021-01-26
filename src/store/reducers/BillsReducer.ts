@@ -23,6 +23,8 @@ export const getBills = createAsyncThunk(
     const getBillsPromise = new Promise((resolve) => {
       SecureStore.getItemAsync('access_token')
         .then((accessToken: any) => {
+          console.log('I am in this page: ' + payload.page);
+
           axios.get('/api/mobile/bills/?page=' + payload.page, { headers: { Authorization: `Bearer ${accessToken}` } })
             .then(response => {
               dispatch(setBillsResponseData(response.data));

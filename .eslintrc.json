@@ -24,6 +24,6 @@
         "quotes": ["error", "single"],
         "no-use-before-define": "off",
         "no-unused-vars": [1, { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
-        "react/display-name": [false, { "ignoreTranspilerName": false }]
+        "react/display-name": [0, { "ignoreTranspilerName": false }]
     }
 }

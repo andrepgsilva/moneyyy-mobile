@@ -2,17 +2,16 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-
 import _styles from '../css/styles';
 
 type BillCardAttributes = {
-  iconName: any, 
-  placeName: string, 
+  iconName: any,
+  placeName: string,
   categoryName: string,
   billValue: string,
 }
 
-export default function BillCard({iconName, placeName, categoryName, billValue}: BillCardAttributes) {
+export default function BillCard ({ iconName, placeName, categoryName, billValue }: BillCardAttributes) {
   return (
     <View style={[styles['w-full'], _styles.flexRow, _styles.justifyBetween]}>
       <View style={[_styles.flexRow]}>
@@ -32,7 +31,7 @@ export default function BillCard({iconName, placeName, categoryName, billValue}:
 }
 
 const styles = StyleSheet.create({
- 'text-fifteen': {
+  'text-fifteen': {
     fontSize: 15
   },
 

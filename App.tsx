@@ -9,7 +9,7 @@ import { interceptorsResponse, interceptorsError } from './src/AjaxInterceptors'
 // eslint-disable-next-line camelcase
 import { useFonts, Nunito_400Regular, Nunito_600SemiBold, Nunito_700Bold, Nunito_800ExtraBold } from '@expo-google-fonts/nunito';
 
-axios.defaults.baseURL = 'http://192.168.1.11:8000';
+axios.defaults.baseURL = 'http://192.168.1.2:8000';
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(interceptorsResponse, interceptorsError);
 
