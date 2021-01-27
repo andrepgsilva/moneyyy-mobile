@@ -13,7 +13,8 @@ interface InitialState {
 }
 
 type payloadGetBills = {
-  page: number
+  page: number,
+  filter?: string
 };
 
 export const getBills = createAsyncThunk(
@@ -23,9 +24,7 @@ export const getBills = createAsyncThunk(
     const getBillsPromise = new Promise((resolve) => {
       SecureStore.getItemAsync('access_token')
         .then((accessToken: any) => {
-          console.log('I am in this page: ' + payload.page);
-
-          axios.get('/api/mobile/bills/?page=' + payload.page, { headers: { Authorization: `Bearer ${accessToken}` } })
+          axios.get(`/api/mobile/bills/?${payload.filter}&page=${payload.page}`, { headers: { Authorization: `Bearer ${accessToken}` } })
             .then(response => {
               dispatch(setBillsResponseData(response.data));
 

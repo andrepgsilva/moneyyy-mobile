@@ -7,6 +7,10 @@ export default {
     color: 'rgba(0, 0, 0, 0.8)'
   },
 
+  'bg-black-alpha-80': {
+    backgroundColor: 'rgba(0, 0, 0, 0.8)'
+  },
+
   'text-white': {
     color: '#ffffff'
   },
